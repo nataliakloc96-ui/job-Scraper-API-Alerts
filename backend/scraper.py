@@ -39,17 +39,13 @@ def save_jobs(jobs):
 
         cursor.execute("""
             INSERT INTO jobs (title, company, location) 
-            SELECT %s, %s, %s
-            WHERE NOT EXISTS (
-                       SELECT 1 FROM jobs 
-                       WHERE title = %s AND company = %s
-            )
-        """, (
-            job["title"], job["company"], job["location"],
-            job["title"], job["company"]
+            VALUES (%s, %s, %s)
+            ON CONFLICT (title, company, location) 
+            DO NOTHING
+        """, (title, company, location))
              
 
-        ))
+        
 
         if key not in seen_jobs:
             seen_jobs.add(key)
