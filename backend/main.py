@@ -42,12 +42,14 @@ def init_db():
                    id SERIAL PRIMARY KEY, 
                    title TEXT,
                    company TEXT,
-                   location TEXT
-        );
+                   location TEXT,
+                   UNIQUE(title, company, location)
+        )
 
     """)
 
     conn.commit()
+    cursor.close()
     conn.close()
 
 init_db()
@@ -61,6 +63,9 @@ def auto_scrape():
     except Exception as e:
         print("AUTO SCRAPE ERROR:", e)
 
+@app.on_event("startup")
+def startup():
+    init_db()
 
 @app.get("/jobs")
 def get_jobs():
@@ -128,5 +133,4 @@ if __name__ == "__main__":
 scheduler = BackgroundScheduler()
 scheduler.add_job(auto_scrape, 'interval', minutes=10)
 scheduler.start()
-
 atexit.register(lambda: scheduler.shutdown())
