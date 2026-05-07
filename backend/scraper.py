@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 from db import get_conn
 import os
+from notifications import send_telegram
+
+seen_jobs = set()
 
 def scrape_jobs():
     url = "https://realpython.github.io/fake-jobs/"
@@ -32,19 +35,27 @@ def save_jobs(jobs):
     print("HOST:", os.getenv("DB_HOST"))
 
     for job in jobs:
-        cursor.execute(
-            """
-            INSERT INTO jobs (title, company, location)
+        key = (job["title"], job["company"])
+
+        cursor.execute("""
+            INSERT INTO jobs (title, company, location) 
             SELECT %s, %s, %s
             WHERE NOT EXISTS (
-                SELECT 1 FROM jobs WHERE title=%s AND company=%s
+                       SELECT 1 FROM jobs 
+                       WHERE title = %s AND company = %s
             )
+        """, (
+            job["title"], job["company"], job["location"],
+            job["title"], job["company"]
+             
 
-            """,
-            (job["title"], job["company"], job["location"],
-             job["title"], job["company"])
+        ))
 
-        )
+        if key not in seen_jobs:
+            seen_jobs.add(key)
+
+            send_telegram(f"🆕 NEW JOB:\n{job['title']}\n{job['company']}\n{job['location']}"
+            )
     conn.commit()
     conn.close()
 
