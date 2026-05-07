@@ -24,12 +24,14 @@ TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
 def send_telegram_message(message):
-    url = f"https://api.telegram.org/bot{8640982433:AAEleNJWJcfFAgL2M8rXh2BMWaCgvrHgUaU}/sendMessage"
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
 
-    requests.post(url, json={
+    response = requests.post(url, json={
         "chat_id": CHAT_ID,
         "text": message
     })
+    print("TELEGRAM STATUS:", response.status_code)
+    print("TELEGRAM RESPONSE:", response.text)
 
 
 
@@ -44,7 +46,7 @@ def init_db():
                    company TEXT,
                    location TEXT,
                    UNIQUE(title, company, location)
-        )
+        );
 
     """)
 
@@ -126,9 +128,7 @@ def debug_db():
         "count": count
     }
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000)
+
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(auto_scrape, 'interval', minutes=10)
