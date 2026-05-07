@@ -15,7 +15,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -65,9 +65,6 @@ def auto_scrape():
     except Exception as e:
         print("AUTO SCRAPE ERROR:", e)
 
-@app.on_event("startup")
-def startup():
-    init_db()
 
 @app.get("/jobs")
 def get_jobs():
@@ -129,8 +126,12 @@ def debug_db():
     }
 
 
-
 scheduler = BackgroundScheduler()
-scheduler.add_job(auto_scrape, 'interval', minutes=10)
-scheduler.start()
-atexit.register(lambda: scheduler.shutdown())
+
+@app.on_event("startup")
+def startup():
+    init_db()
+    scheduler.add_job(auto_scrape, 'interval', minutes=10)
+    scheduler.start()
+    
+
