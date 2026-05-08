@@ -99,9 +99,13 @@ def get_jobs():
 
 @app.post("/scrape")
 def scrape():
-    data = scrape_jobs()
-    save_jobs(data)
-    return {"saved": len(data)}
+    try:
+        data = scrape_jobs()
+        save_jobs(data)
+        return {"saved": len(data)}
+    except Exception as e:
+        print("SCRAPE ERROR:", e)
+        return {"error": str(e)}
 
 def run_scraper():
     try:
