@@ -37,17 +37,17 @@ def save_jobs(jobs):
     print("HOST:", os.getenv("DB_HOST"))
 
     for job in jobs:
-        key = (job["title"], job["company"])
+        
 
         cursor.execute("""
             INSERT INTO jobs (title, company, location) 
-            VALUES( %s, %s, %s)
+            VALUES (%s, %s, %s)
             ON CONFLICT (title, company, location) DO NOTHING
             
-        """, job) 
+        """, (job["title"], job["company"], job["location"]) )
 
         if cursor.rowcount > 0:
-            send_telegram(f"🆕 NEW JOB:\n{job[0]}\n{job[1]}\n{job[2]}")
+            send_telegram(f"🆕 NEW JOB:\n{job['title']}\n{job['company']}\n{job['location']}")
             
 
         
