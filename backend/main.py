@@ -132,6 +132,10 @@ def debug_db():
 @app.on_event("startup")
 def startup():
     init_db()
+
+@app.get("/")
+def root():
+    return {"status": "API running"}
     
 scheduler = BackgroundScheduler()
 scheduler.add_job(auto_scrape, 'interval', minutes=10)
