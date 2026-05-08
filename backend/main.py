@@ -14,7 +14,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[""https://job-scraper-api-alerts.vercel.app",
+    allow_origins=["https://job-scraper-api-alerts.vercel.app",
     "https://job-scraper-api-alerts-git-main-nataliakloc96-uis-projects.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
