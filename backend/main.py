@@ -22,9 +22,7 @@ app.add_middleware(
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
-if not TELEGRAM_TOKEN or not CHAT_ID:
-    print("TELEGRAM NOT CONFIGURED")
-    return
+
 
 def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
@@ -78,6 +76,8 @@ def get_jobs():
     cursor.execute("SELECT title, company, location FROM jobs ORDER BY id DESC LIMIT 50")
     rows = cursor.fetchall()
 
+    cursor.close()
+
     conn.close()
 
     return{
@@ -129,12 +129,12 @@ def debug_db():
     }
 
 
-scheduler = BackgroundScheduler()
-
 @app.on_event("startup")
 def startup():
     init_db()
-    scheduler.add_job(auto_scrape, 'interval', minutes=10)
-    scheduler.start()
+    
+scheduler = BackgroundScheduler()
+scheduler.add_job(auto_scrape, 'interval', minutes=10)
+scheduler.start()
     
 
