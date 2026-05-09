@@ -1,9 +1,0 @@
-8640982433:AAEleNJWJcfFAgL2M8rXh2BMWaCgvrHgUaU
-
-https://api.telegram.org/bot8640982433:AAEleNJWJcfFAgL2M8rXh2BMWaCgvrHgUaU/getUpdates
-
-
-postgresql://scraper_1pbr_user:
-FgPpAiYSIygameqwN5e8zPi0X5vU4h4x@
-dpg-d7tr4nnavr4c73d0abrg-a.frankfurt-postgres.render.com
-/scraper_1pbr
