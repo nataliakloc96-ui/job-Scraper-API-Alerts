@@ -17,3 +17,7 @@ async function loadStats() {
     document.getElementById("stats").innerHTML =
         `DB: ${data.database} | Jobs: ${data.count}`;
 }
+
+fetch(`${API}/jobs`)
+fetch(`${API}/debug-db`)
+fetch(`${API}/scrape`, { method: "POST" })
