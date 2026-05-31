@@ -1,206 +1,94 @@
-# Job Scraper API + Alerts
+# 🔍 Job Scraper API Alerts
 
-Production-ready job scraping and alerting platform that automatically collects job offers, stores them in PostgreSQL, removes duplicates, and sends real-time Telegram notifications.
+A job monitoring and alerting platform that collects job postings and exposes them through a REST API.
 
-## Live Demo
+## 🚀 Overview
 
-Frontend (Vercel):
-job-scraper-api-alerts.vercel.app
-
-Backend API (Render):  
-https://job-scraper-api-alerts.onrender.com
-
-Repository:  
-https://github.com/nataliakloc96-ui/job-Scraper-API-Alerts.git
+Job Scraper API Alerts automates job collection and provides structured access to job market data. The project demonstrates web scraping concepts, API development, and backend automation.
 
 ---
 
-## Features
+## ✨ Features
 
-### Automated Job Scraping
-Scrapes job listings automatically from external job boards.
-
-### PostgreSQL Storage
-Stores scraped jobs in database with persistent tracking.
-
-### Duplicate Detection
-Uses PostgreSQL conflict handling to prevent duplicate entries.
-
-### Telegram Alerts
-Instant notifications for newly discovered jobs.
-
-### REST API
-Expose collected jobs through FastAPI endpoints.
-
-### Production Deployment
-Cloud deployed on Render.
+* Job data collection
+* Job listing API
+* Filtering and search
+* Automated alert workflow
+* REST API architecture
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 
 ### Backend
-- Python
-- FastAPI
-- PostgreSQL
-- psycopg2
-- BeautifulSoup
-- requests
 
-### Integrations
-- Telegram Bot API
+* Python
+* FastAPI
+* Requests
+* BeautifulSoup
 
 ### Deployment
-- Render
+
+* Render
 
 ---
 
-## Architecture
+## 📂 Project Structure
 
-Job Sources  
-↓  
-Web Scraper Engine  
-↓  
-Data Parsing  
-↓  
-PostgreSQL Storage  
-↓  
-Duplicate Filtering  
-↓  
-Telegram Alerts  
-↓  
-REST API Delivery
+```text
+Job-Scraper-API-Alerts/
+
+├── backend/
+│   ├── main.py
+│   ├── scraper.py
+│   └── requirements.txt
+│
+└── README.md
+```
 
 ---
 
-## API Endpoints
+## 📡 API Endpoints
 
 ### Get Jobs
-`GET /jobs`
 
-Returns stored jobs.
-
----
-
-### Run Scraper
-`POST /scrape`
-
-Triggers scraping manually.
-
----
-
-### Health Check
-`GET /`
-
-Backend status check.
-
----
-
-## Database Logic
-
-Uses conflict-safe inserts:
-
-```sql
-INSERT INTO jobs (...)
-ON CONFLICT DO NOTHING
+```http
+GET /jobs
 ```
 
-This guarantees no duplicate job records.
+### Search Jobs
 
----
-
-## Telegram Alerts
-
-When new jobs are detected:
-
-- Title
-- Company
-- Location
-- Timestamp
-
-are automatically sent via Telegram bot.
-
----
-
-## Installation
-
-Clone repository:
-
-```bash
-git clone https://github.com/nataliakloc96-ui/job-Scraper-API-Alerts.git
-cd Job-Scraper-API-Alerts
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Configure environment variables:
-
-```env
-DATABASE_URL=
-TELEGRAM_TOKEN=
-CHAT_ID=
-```
-
-Run backend:
-
-```bash
-uvicorn main:app --reload
+```http
+GET /jobs/search
 ```
 
 ---
 
-## Example Workflow
+## 🎯 Learning Objectives
 
-1. Scraper fetches jobs
-2. Parses job data
-3. Stores unique records
-4. Detects new jobs
-5. Sends Telegram alerts
-6. API exposes collected jobs
+* Web Scraping
+* API Development
+* Data Collection
+* Backend Automation
 
 ---
 
-## Screenshots
+## 🌐 Live Demo
 
-Add screenshots here:
+Frontend:
+job-scraper-api-alerts.vercel.app
 
-- Telegram alerts
-- Database records
-- API response
-- Render deployment dashboard
-
----
-
-## Business Value
-
-Automates job discovery and alerting for faster opportunity tracking without manual searching.
-
-Useful for:
-
-- job seekers
-- recruiters
-- monitoring niche job markets
-- backend automation workflows
+API:
+https://job-scraper-api-alerts.onrender.com
 
 ---
 
-## Future Improvements
-
-- Multi-board scraping
-- Scheduled background workers
-- Email alerts
-- Admin dashboard
-- Filtering by role/location
-- Resume-job fit integration
-
----
-
-## Author
+## 👩‍💻 Author
 
 Natalia Kurek
 
-Backend / Automation / Data Engineering Portfolio Project
+LinkedIn:
+[www.linkedin.com/in/natalia-kurek-b46660308](http://www.linkedin.com/in/natalia-kurek-b46660308)
+
+GitHub:
+https://github.com/nataliakloc96-ui
